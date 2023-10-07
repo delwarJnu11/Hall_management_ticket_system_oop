@@ -1,6 +1,19 @@
 import time
 
-# create a class for seat initialize
+# Star Cinema Class
+
+
+class Star_Cinema:
+    hall_list = []
+
+    @classmethod
+    def entry_hall(self, hall):
+        self.hall_list.append(hall)
+
+    def get_all_hall(self):
+        for hall in self.hall_list:
+            print(
+                f"Hall Number: {hall._hall_no}, Rows: {hall._rows}, Columns: {hall._cols}")
 
 
 class Seats:
@@ -14,10 +27,8 @@ class Seats:
             seats.append(row_of_seats)
         return seats
 
-# Hall Class
 
-
-class Hall:
+class Hall(Star_Cinema):
     def __init__(self, rows, cols, hall_no):
         self._rows = rows
         self._cols = cols
@@ -81,22 +92,10 @@ class Hall:
             print()
 
 
-# star Cinema Class
-class Star_Cinema(Hall):
-    hall_list = []
-
-    def __init__(self, rows, cols, hall_no):
-        super().__init__(rows, cols, hall_no)
-
-    @classmethod
-    def entry_hall(self, hall):
-        self.hall_list.append(hall)
-
-
-balaka_hall = Star_Cinema(5, 5, 1111)
-balaka_hall.entry_show(1, "Jawan", time.ctime())
-balaka_hall.entry_show(2, "Dhaka Attack", time.ctime())
-balaka_hall.entry_show(5, "King of kotha", time.ctime())
+balaka = Hall(5, 5, 1111)
+balaka.entry_show(1, "Jawan", time.ctime())
+balaka.entry_show(2, "Dhaka Attack", time.ctime())
+balaka.entry_show(5, "King of kotha", time.ctime())
 
 
 while True:
@@ -109,15 +108,15 @@ while True:
     option = int(input('Enter option: '))
 
     if option == 1:
-        balaka_hall.view_show_list()
+        balaka.view_show_list()
     elif option == 2:
         show_id = int(input('Enter show ID: '))
-        balaka_hall.view_available_seats(show_id)
+        balaka.view_available_seats(show_id)
     elif option == 3:
         show_id = int(input('Enter show ID: '))
         seat_row = int(input('Enter seat row: '))
         seat_col = int(input('Enter seat column: '))
-        balaka_hall.book_seats(show_id, [(seat_row, seat_col)])
+        balaka.book_seats(show_id, [(seat_row, seat_col)])
     elif option == 4:
         break
     else:
