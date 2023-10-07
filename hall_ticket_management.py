@@ -1,12 +1,6 @@
 import time
 
-
-class Star_Cinema:
-    hall_list = []
-
-    @classmethod
-    def entry_hall(self, hall):
-        self.hall_list.append(hall)
+# create a class for seat initialize
 
 
 class Seats:
@@ -20,8 +14,10 @@ class Seats:
             seats.append(row_of_seats)
         return seats
 
+# Hall Class
 
-class Hall(Star_Cinema):
+
+class Hall:
     def __init__(self, rows, cols, hall_no):
         self._rows = rows
         self._cols = cols
@@ -45,7 +41,7 @@ class Hall(Star_Cinema):
 
         for row, col in seat_list:
             if row < 0 or row >= self._rows or col < 0 or col >= self._cols:
-                print("Invalid seat selection")
+                print("Invalid seat selection.")
                 return
 
             if self._seats[id][row][col] == 'X':
@@ -54,7 +50,7 @@ class Hall(Star_Cinema):
                 return
 
             self._seats[id][row][col] = 'X'
-            print('Booking successful!')
+            print('Seat Booking successfully Done!')
 
     def view_show_list(self):
         for show_info in self._show_list:
@@ -73,7 +69,7 @@ class Hall(Star_Cinema):
         idx = show_ids.index(id)
 
         print(
-            f"Available seats for Show {id} ({self._show_list[idx][1]}, {self._show_list[idx][2]}):")
+            f"Available seats for Movie -> {self._show_list[idx][1]}:")
         for row in range(self._rows):
             for col in range(self._cols):
                 if self._seats[id][row][col] == 'A':
@@ -85,10 +81,22 @@ class Hall(Star_Cinema):
             print()
 
 
-balaka = Hall(5, 5, 1111)
-balaka.entry_show(1, "Jawan", time.ctime())
-balaka.entry_show(2, "Dhaka Attack", time.ctime())
-balaka.entry_show(5, "King of kotha", time.ctime())
+# star Cinema Class
+class Star_Cinema(Hall):
+    hall_list = []
+
+    def __init__(self, rows, cols, hall_no):
+        super().__init__(rows, cols, hall_no)
+
+    @classmethod
+    def entry_hall(self, hall):
+        self.hall_list.append(hall)
+
+
+balaka_hall = Star_Cinema(5, 5, 1111)
+balaka_hall.entry_show(1, "Jawan", time.ctime())
+balaka_hall.entry_show(2, "Dhaka Attack", time.ctime())
+balaka_hall.entry_show(5, "King of kotha", time.ctime())
 
 
 while True:
@@ -101,15 +109,15 @@ while True:
     option = int(input('Enter option: '))
 
     if option == 1:
-        balaka.view_show_list()
+        balaka_hall.view_show_list()
     elif option == 2:
         show_id = int(input('Enter show ID: '))
-        balaka.view_available_seats(show_id)
+        balaka_hall.view_available_seats(show_id)
     elif option == 3:
         show_id = int(input('Enter show ID: '))
         seat_row = int(input('Enter seat row: '))
         seat_col = int(input('Enter seat column: '))
-        balaka.book_seats(show_id, [(seat_row, seat_col)])
+        balaka_hall.book_seats(show_id, [(seat_row, seat_col)])
     elif option == 4:
         break
     else:
