@@ -36,6 +36,8 @@ class Hall(Star_Cinema):
         self._seats = {}
         self._show_list = []
 
+        Star_Cinema.entry_hall(self)
+
     def entry_show(self, id, movie_name, time):
         show_info = (id, movie_name, time)
         self._show_list.append(show_info)
